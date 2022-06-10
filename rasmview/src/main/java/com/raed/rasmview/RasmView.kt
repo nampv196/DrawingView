@@ -2,6 +2,7 @@ package com.raed.rasmview
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.view.MotionEvent
@@ -9,20 +10,24 @@ import android.view.View
 import com.raed.rasmview.renderer.RasmRendererFactory
 import com.raed.rasmview.renderer.Renderer
 import com.raed.rasmview.state.RasmState
-import com.raed.rasmview.touch.handler.RasmViewEventHandlerFactory
 import com.raed.rasmview.touch.handler.MotionEventHandler
+import com.raed.rasmview.touch.handler.RasmViewEventHandlerFactory
 
 class RasmView(
     context: Context,
     attrs: AttributeSet?,
     defStyleAttr: Int,
-): View(context, attrs, defStyleAttr) {
+) : View(context, attrs, defStyleAttr) {
 
-    constructor(context: Context): this(context, null)
+    constructor(context: Context) : this(context, null)
 
-    constructor(context: Context, attrs: AttributeSet? = null): this(context, attrs, 0)
+    constructor(context: Context, attrs: AttributeSet? = null) : this(context, attrs, 0)
 
-    val rasmContext = RasmContext(context)
+    val rasmContext = RasmContext()
+
+    private var screenWidth = 0
+    private var screenHeight = 0
+
 
     init {
         rasmContext.state.addOnStateChangedListener(::onRasmStateChanged)
@@ -38,10 +43,19 @@ class RasmView(
 
     override fun onSizeChanged(w: Int, h: Int, oldw: Int, oldh: Int) {
         super.onSizeChanged(w, h, oldw, oldh)
-        if (rasmContext.hasRasm || w == 0 || h == 0) {
+        screenWidth = w
+        screenHeight = h
+        if (rasmContext.hasRasm || screenWidth == 0 || screenHeight == 0) {
             return
         }
-        rasmContext.setRasm(w, h)
+    }
+
+    fun setDrawingBitmap(bitmap: Bitmap) {
+        if (screenWidth == 0 || screenHeight == 0) {
+            throw Exception("view hasn't initialized yet")
+            return
+        }
+        rasmContext.setRasm(screenWidth, screenHeight, bitmap)
         updateRenderer()
         resetTransformation()
     }

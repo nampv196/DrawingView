@@ -1,114 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:gravity="center"
     android:orientation="vertical"
-    android:padding="12dp"
-    android:gravity="center">
+    android:padding="12dp">
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_drawing_photo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:itemCount="10"
+        android:orientation="horizontal"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_drawing_photo" />
 
     <androidx.appcompat.widget.AppCompatSpinner
         android:id="@+id/brush_spinner"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="6dp"
-        />
+        android:padding="6dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/size"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        />
+        android:text="@string/size"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/brushSizeSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="99"
-        />
+        android:max="99" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/flow"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        />
+        android:text="@string/flow"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/brushFlowSeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="99"
-        />
+        android:max="99" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/opacity"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        />
+        android:text="@string/opacity"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
     <androidx.appcompat.widget.AppCompatSeekBar
         android:id="@+id/brushOpacitySeekBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:max="99"
-        />
+        android:max="99" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="12dp"
-        android:background="?colorOnSurface"
         android:alpha="0.5"
-        />
+        android:background="?colorOnSurface" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/brush_color"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        />
+        android:text="@string/brush_color"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
     <include
         android:id="@+id/brushColorViews"
-        layout="@layout/colors"
-        />
+        layout="@layout/colors" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="12dp"
-        android:background="?colorOnSurface"
         android:alpha="0.5"
-        />
+        android:background="?colorOnSurface" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/background_color"
         android:layout_marginBottom="4dp"
-        android:textAppearance="@style/TextAppearance.Material3.TitleMedium"
-        />
+        android:text="@string/background_color"
+        android:textAppearance="@style/TextAppearance.Material3.TitleMedium" />
 
     <include
         android:id="@+id/backgroundColorViews"
-        layout="@layout/colors"
-        />
+        layout="@layout/colors" />
 
     <View
         android:layout_width="match_parent"
         android:layout_height="1dp"
         android:layout_margin="12dp"
-        android:background="?colorOnSurface"
         android:alpha="0.5"
-        />
+        android:background="?colorOnSurface" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/rotationSwitch"
@@ -126,26 +121,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:text="@string/undo"
             android:enabled="false"
-            />
+            android:text="@string/undo" />
 
         <Button
             android:id="@+id/redoButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:text="@string/redo"
             android:enabled="false"
-            />
+            android:text="@string/redo" />
 
         <Button
             android:id="@+id/clearButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="2dp"
-            android:text="@string/clear"
-            />
+            android:text="@string/clear" />
 
     </LinearLayout>
 
@@ -154,7 +146,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="2dp"
-        android:text="@string/resetTransformation"
-        />
+        android:text="@string/resetTransformation" />
 
 </LinearLayout>

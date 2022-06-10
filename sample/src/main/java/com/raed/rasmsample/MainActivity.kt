@@ -1,5 +1,6 @@
 package com.raed.rasmsample
 
+import android.graphics.Bitmap
 import android.graphics.Point
 import android.graphics.drawable.ColorDrawable
 import android.os.Build
@@ -8,6 +9,10 @@ import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
 import com.google.android.material.switchmaterial.SwitchMaterial
 import com.raed.rasmview.RasmView
 import com.raed.rasmview.brushtool.data.Brush
@@ -29,6 +34,21 @@ class MainActivity : AppCompatActivity() {
         setContentView(getContentViewResId())
 
         rasmView = findViewById(R.id.rasmView)
+
+        findViewById<RecyclerView>(R.id.rv_drawing_photo).adapter = DrawingPhotoAdapter {
+            Glide.with(this)
+                .asBitmap()
+                .load(it)
+                .into(object : SimpleTarget<Bitmap>() {
+                    @Override
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        rasmView.setDrawingBitmap(resource)
+                    }
+                })
+        }
 
         val spinner = findViewById<Spinner>(R.id.brush_spinner)
         spinner.adapter = ArrayAdapter(this, R.layout.text_view, Brush.values())

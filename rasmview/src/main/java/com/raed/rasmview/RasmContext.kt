@@ -13,7 +13,7 @@ import com.raed.rasmview.state.RasmState
 import com.raed.rasmview.util.LogUtil
 
 
-class RasmContext internal constructor(private val context: Context) {
+class RasmContext internal constructor() {
 
     private var nullableBrushToolBitmaps: BrushToolBitmaps? = null
         set(value) {
@@ -36,20 +36,20 @@ class RasmContext internal constructor(private val context: Context) {
     fun setRasm(
         drawingWidth: Int,
         drawingHeight: Int,
+        drawBitmap: Bitmap
     ) {
         val backgroundBitmap = Bitmap.createBitmap(drawingWidth, drawingHeight, ARGB_8888)
-        val mainBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.dfsf)
 
-        if (mainBitmap.width > backgroundBitmap.width || mainBitmap.height > backgroundBitmap.height) {
+        if (drawBitmap.width > backgroundBitmap.width || drawBitmap.height > backgroundBitmap.height) {
             // TODO: convert main bitmap inside background bitmap
         }
 
-        val moveLeft = (backgroundBitmap.width - mainBitmap.width) / 2f
-        val moveTop = (backgroundBitmap.height - mainBitmap.height) / 2f
+        val moveLeft = (backgroundBitmap.width - drawBitmap.width) / 2f
+        val moveTop = (backgroundBitmap.height - drawBitmap.height) / 2f
 
         val canvas = Canvas(backgroundBitmap)
         canvas.drawBitmap(backgroundBitmap, 0f, 0f, null)
-        canvas.drawBitmap(mainBitmap, moveLeft, moveTop, null)
+        canvas.drawBitmap(drawBitmap, moveLeft, moveTop, null)
 
         setRasm(backgroundBitmap)
     }
