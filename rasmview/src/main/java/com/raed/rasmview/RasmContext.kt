@@ -1,10 +1,8 @@
 package com.raed.rasmview
 
-import android.graphics.Bitmap
+import android.content.Context
+import android.graphics.*
 import android.graphics.Bitmap.Config.ARGB_8888
-import android.graphics.Canvas
-import android.graphics.Matrix
-import android.graphics.RectF
 import com.raed.rasmview.actions.ChangeBackgroundAction
 import com.raed.rasmview.actions.ClearAction
 import com.raed.rasmview.brushtool.BrushToolBitmaps
@@ -12,8 +10,10 @@ import com.raed.rasmview.brushtool.BrushToolStatus
 import com.raed.rasmview.brushtool.model.BrushConfig
 import com.raed.rasmview.renderer.RasmRendererFactory
 import com.raed.rasmview.state.RasmState
+import com.raed.rasmview.util.LogUtil
 
-class RasmContext internal constructor() {
+
+class RasmContext internal constructor(private val context: Context) {
 
     private var nullableBrushToolBitmaps: BrushToolBitmaps? = null
         set(value) {
@@ -32,10 +32,27 @@ class RasmContext internal constructor() {
     var rotationEnabled = false
     internal var backgroundColor = -1
 
+
     fun setRasm(
         drawingWidth: Int,
         drawingHeight: Int,
-    ) = setRasm(Bitmap.createBitmap(drawingWidth, drawingHeight, ARGB_8888))
+    ) {
+        val backgroundBitmap = Bitmap.createBitmap(drawingWidth, drawingHeight, ARGB_8888)
+        val mainBitmap = BitmapFactory.decodeResource(context.resources, R.drawable.dfsf)
+
+        if (mainBitmap.width > backgroundBitmap.width || mainBitmap.height > backgroundBitmap.height) {
+            // TODO: convert main bitmap inside background bitmap
+        }
+
+        val moveLeft = (backgroundBitmap.width - mainBitmap.width) / 2f
+        val moveTop = (backgroundBitmap.height - mainBitmap.height) / 2f
+
+        val canvas = Canvas(backgroundBitmap)
+        canvas.drawBitmap(backgroundBitmap, 0f, 0f, null)
+        canvas.drawBitmap(mainBitmap, moveLeft, moveTop, null)
+
+        setRasm(backgroundBitmap)
+    }
 
     fun setRasm(rasm: Bitmap) {
         nullableBrushToolBitmaps = BrushToolBitmaps.createFromDrawing(rasm)
@@ -62,6 +79,8 @@ class RasmContext internal constructor() {
     }
 
     internal fun resetTransformation(containerWidth: Int, containerHeight: Int) {
+        LogUtil.logFlow("resetTransformation rasmWidth: ${rasmWidth.toFloat()}, rasmHeight: ${rasmHeight.toFloat()}")
+        LogUtil.logFlow("resetTransformation rasmWidth: ${containerWidth.toFloat()}, rasmHeight: ${containerHeight.toFloat()}")
         transformation.setRectToRect(
             RectF(0F, 0F, rasmWidth.toFloat(), rasmHeight.toFloat()),
             RectF(0f, 0f, containerWidth.toFloat(), containerHeight.toFloat()),

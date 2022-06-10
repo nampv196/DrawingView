@@ -2,6 +2,7 @@ package com.raed.rasmview.renderer
 
 import android.graphics.Rect
 import com.raed.rasmview.RasmContext
+import com.raed.rasmview.util.LogUtil
 
 internal class RasmRendererFactory {
 
@@ -26,6 +27,7 @@ internal class RasmRendererFactory {
     }
 
     private fun createBrushToolResultRenderer(rasmContext: RasmContext): Renderer {
+        LogUtil.logFlow("createBrushToolResultRenderer")
         return TransformedRenderer(
             rasmContext.transformation,
             ListRenderer(
@@ -41,6 +43,7 @@ internal class RasmRendererFactory {
     }
 
     private fun createLayerRenderer(rasmContext: RasmContext): Renderer {
+        LogUtil.logFlow("createLayerRenderer")
         return TransformedRenderer(
             rasmContext.transformation,
             ListRenderer(

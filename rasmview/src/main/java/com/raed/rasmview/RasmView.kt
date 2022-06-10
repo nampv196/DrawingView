@@ -22,7 +22,7 @@ class RasmView(
 
     constructor(context: Context, attrs: AttributeSet? = null): this(context, attrs, 0)
 
-    val rasmContext = RasmContext()
+    val rasmContext = RasmContext(context)
 
     init {
         rasmContext.state.addOnStateChangedListener(::onRasmStateChanged)

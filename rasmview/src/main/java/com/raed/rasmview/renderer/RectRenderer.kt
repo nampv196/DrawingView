@@ -3,6 +3,7 @@ package com.raed.rasmview.renderer
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import com.raed.rasmview.util.LogUtil
 
 internal class RectRenderer(
     private val rect: Rect,
@@ -14,6 +15,7 @@ internal class RectRenderer(
     }
 
     override fun render(canvas: Canvas) {
+        LogUtil.logFlow("RectRenderer")
         canvas.drawRect(rect, paint)
     }
 
